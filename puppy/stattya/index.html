@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="uk">
+<script>document.documentElement.classList.add('js');</script>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -260,6 +261,9 @@ footer a{color:var(--muted)}
 .sticky .p .sub{display:block;font-size:12px;color:var(--muted)}
 .sticky a{background:var(--accent);color:#fff;text-decoration:none;padding:13px 18px;border-radius:12px;font-family:var(--label);font-weight:600;font-size:17px;letter-spacing:.5px;white-space:nowrap}
 @media (min-width:900px){.sticky{display:none} footer{padding-bottom:40px}}
+.sticky{transition:transform .3s ease, opacity .3s ease}
+html.js .sticky{transform:translateY(110%);opacity:0;pointer-events:none}
+html.js .sticky.show{transform:none;opacity:1;pointer-events:auto}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 <!-- Meta Pixel -->
@@ -516,6 +520,15 @@ document.addEventListener('click',function(e){var a=e.target&&e.target.closest?e
   for(var k in v){document.querySelectorAll('.'+k).forEach(function(el){el.textContent=v[k];});}
   if(s===0){clearInterval(iv);}}
  var iv=setInterval(tick,1000); tick();
+})();
+</script>
+<script>
+(function(){
+ /* Плашка оплати з'являється тільки коли читач дійшов до блоку курсу */
+ var bar=document.querySelector('.sticky'), course=document.getElementById('course');
+ if(!bar||!course) return;
+ function upd(){ bar.classList.toggle('show', course.getBoundingClientRect().top < window.innerHeight*0.85); }
+ window.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd); upd();
 })();
 </script>
 </body>
